@@ -1,34 +1,38 @@
-#
-# The simplest possible GitHub Actions workflow.
-#
+# The name of the workflow
 
 name: Hello world
 
+# When the script is triggered ? 
+# The script will be triggered when you push something into main branch
 on:
-  #
-  # Triggers this workflow on push to the main branch of this code repository.
-  #
-  push: 
+  push:
     branches:
       - main
+  # Allow us to run workflow manually from the action tab
+  # You can run it manually in the github ui page, then go into actions tab, select the script then at the right top, click run the workflow
+  workflow_dispatch:
 
-  #
-  # Allows deployment to be invoked manually through the GitHub Actions user interface.
-  #
-  workflow_dispatch: 
-  
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# define the jobs that needed to be run
+# It can be sequential or parallel
 jobs:
-  # This workflow contains a single job called "hello-world"
+  # The first job, called hello world
   hello-world:
-    # The type of runner that the job will run on
+    # It's run on ubuntu-latest
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    # A sequence of steps that needed to be executed
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Check out the repository into the runner (you can check what the runner is in the notes.ipynb) so this workflow can access it. Without this, the workflow
+      # cannot access the shell script
       - uses: actions/checkout@v3
-
-      # Runs our our "Hello world" shell script.
-      - name: Runs the "Hello world" shell script
+      - name: Run the shell script 
+        # Run the script based on the location
         run: ./index.sh
+        # Or you can directly execute the script
+        # run: echo "Hello World"
+        # Or you can invoke multiple commands : 
+        # run : |
+        #     <command 1>
+        #     <command 2>
+        #     .... etc
+  
+    
